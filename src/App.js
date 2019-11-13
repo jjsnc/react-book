@@ -1,13 +1,14 @@
-import React ,{Component}from 'react';
+import React ,{Component,Fragment}from 'react';
 
 import {Wrapper, Title } from './style'
 import {GlobalStyle} from './styleCommon.js'
 class App extends  Component{
   render(){
    return (
-     <div>
-       <GlobalStyle  whiteColor>  </GlobalStyle>
-       <Wrapper>
+     <Fragment>
+       <GlobalStyle /> 
+       <div>123</div>
+{      <Wrapper>
          <Title>
           Hello World!
           <ul>
@@ -16,8 +17,8 @@ class App extends  Component{
             <li>003</li>
           </ul>
          </Title>
-       </Wrapper>
-       </div>
+         </Wrapper>}
+       </Fragment>
      );
   }
 }
