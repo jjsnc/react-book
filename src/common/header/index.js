@@ -2,13 +2,21 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-13 20:14:43
+* @Last Modified time: 2019-11-14 22:21:56
 */
 
 import React, { Component } from 'react';
+import { CSSTransition } from 'react-transition-group';
 import { SearchWrapper, HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button } from './style.js'
 class Header extends Component {
-
+   constructor(props){
+      super(props)
+      this.state={
+      	focused: false
+      }
+      this.handleInputFocus = this.handleInputFocus.bind(this);
+      this.handleInputBlur = this.handleInputBlur.bind(this);
+   }
 	render() {
 		return (
 			<HeaderWrapper>
@@ -21,8 +29,18 @@ class Header extends Component {
 						<span className="iconfont">&#xe636;</span>
 					</NavItem>
 					<SearchWrapper>
-						<NavSearch></NavSearch>
-						<span className="iconfont">&#xe62a;</span>
+					<CSSTransition
+							in={this.state.focused}
+							timeout={200}
+							classNames="slide"
+						>
+						<NavSearch
+						className={this.state.focused? 'focused':''}
+						onFocus={this.handleInputFocus}
+						onBlur={this.handleInputBlur}
+						></NavSearch>
+						</CSSTransition>
+						<span  className={this.state.focused? 'focused iconfont':'iconfont'}>&#xe62a;</span>
 					</SearchWrapper>
 				</Nav>
 				<Addition>
@@ -35,6 +53,16 @@ class Header extends Component {
 
 			</HeaderWrapper>
 		)
+	}
+	handleInputFocus() {
+		this.setState({
+			focused:true
+		})
+	}
+	handleInputBlur(){
+		this.setState({
+			focused:false
+		})
 	}
 }
 

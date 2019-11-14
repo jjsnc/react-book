@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:24:43
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-13 20:13:12
+* @Last Modified time: 2019-11-14 22:10:44
 */
 
 import styled  from 'styled-components'
@@ -63,6 +63,10 @@ position:relative;
   line-height: 30px;
   text-align: center;
   border-radius: 15px;
+  &.focused {
+    background: #777;
+    color:#fff;
+  }
 }
 `
 
@@ -84,8 +88,23 @@ export const NavSearch = styled.input.attrs({
   padding:0 30px 0 20px;
   box-sizing: border-box;
   color: #666;
-  &.::placeholder:{
-  	color: #999;
+  &::placeholder {
+    color: #999;
+  }
+  &.focused {
+    width: 240px;
+  }
+  &.slide-enter {
+    transition: all .2s ease-out;
+  }
+  &.slide-enter-active {
+    width: 240px;
+  }
+  &.slide-exit {
+    transition: all .2s ease-out;
+  }
+  &.slide-exit-active {
+    width: 160px;
   }
   `
 
