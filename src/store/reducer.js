@@ -2,9 +2,11 @@
 * @Author: jjsnc
 * @Date:   2019-11-14 22:34:21
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-14 22:45:20
+* @Last Modified time: 2019-11-14 23:13:16
 */
 import * as constants from './constants';
+
+console.log(constants,'constants')
 
 const defaultState = {
 	focused: false,
@@ -15,11 +17,14 @@ const defaultState = {
 };
 
 export default (state = defaultState, action) => {
+		 let newState = JSON.parse(JSON.stringify(state))
 	switch(action.type) {
 		case constants.SEARCH_FOCUS:
-			return state.set('focused', true);
-		case SEARCH_BLUR:
-			return state.set('focused', false);
+		    newState.focused = true
+	     return newState
+		case constants.SEARCH_BLUR:
+		    newState.focused = false
+	     return newState
 		case constants.CHANGE_LIST:
 			return state.merge({
 				list: action.data,
