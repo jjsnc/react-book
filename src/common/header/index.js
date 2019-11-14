@@ -17,7 +17,9 @@ import {HeaderWrapper ,Logo, Nav, NavItem, NavSearch,Addition, Button} from './s
      		 <NavItem className='left active'>首页</NavItem>
      		 <NavItem className='left'>下载App</NavItem>
      		 <NavItem className='right'>登录</NavItem>
-     		 <NavItem className='right'>Aa</NavItem>
+     		 <NavItem className='right'>
+				 <span class="iconfont">&#xe636;</span>
+			  </NavItem>
      		 <NavSearch></NavSearch>
      		 </Nav>
      		 <Addition>
