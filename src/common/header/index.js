@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 10:46:56
+* @Last Modified time: 2019-11-15 18:02:14
 */
 
 import React, { Component } from 'react';
@@ -24,7 +24,7 @@ import { SearchWrapper,
 import { actionCreators } from './store';
 import { connect } from 'react-redux';
 
-const getListArea  = (show)=> {
+const getListArea  = (show,list)=> {
 	if (show) {
 		return (
 			<SearchInfo>
@@ -33,14 +33,9 @@ const getListArea  = (show)=> {
 					<SearchInfoSwitch>换一批</SearchInfoSwitch>
 					</SearchInfoTitle>
 					<SearchInfoList>
-						<SearchInfoItem> 教育</SearchInfoItem>
-						<SearchInfoItem> 教育</SearchInfoItem>
-						<SearchInfoItem> 教育</SearchInfoItem>
-						<SearchInfoItem> 教育</SearchInfoItem>
-						<SearchInfoItem> 教育</SearchInfoItem>
-						<SearchInfoItem> 教育</SearchInfoItem>
-						<SearchInfoItem> 教育</SearchInfoItem>
-						<SearchInfoItem> 教育</SearchInfoItem>
+                    { list.map((item)=> {
+                    	return (<SearchInfoItem key={item}>{item}</SearchInfoItem>)
+                    })}
 					</SearchInfoList>
 				</SearchInfo>)
 	}else {
@@ -50,7 +45,7 @@ const getListArea  = (show)=> {
 
 class Header extends Component {
 	render() {
-		const {focused, handleInputFocus, handleInputBlur} = this.props
+		const {focused, handleInputFocus, handleInputBlur,list} = this.props
 		return (
 			<HeaderWrapper>
 				<Logo href="./" />
@@ -75,7 +70,7 @@ class Header extends Component {
 						</CSSTransition>
 						<span  className={focused? 'focused iconfont':'iconfont'}>&#xe62a;</span>
 
-						{getListArea(focused)}
+						{getListArea(focused,list)}
 					</SearchWrapper>
 				</Nav>
 				<Addition>
@@ -94,15 +89,17 @@ class Header extends Component {
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
     // focused: state.get('header').get('focused')
-    focused: state.getIn(['header','focused'])
+    focused: state.getIn(['header','focused']),
+    list: state.getIn(['header','list'])
   }
 }
 
 const mapDispatchToProps = (dispatch)=> {
     return {
 		handleInputFocus() {
-			const action = actionCreators.searchFocus();
-	    	dispatch(action)
+		const action = actionCreators.searchFocus();
+	    dispatch(action)
+	    dispatch(actionCreators.getList())
 		},
 		handleInputBlur(){
 			const action = actionCreators.searchBlur()

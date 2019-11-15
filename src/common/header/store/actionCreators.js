@@ -2,10 +2,12 @@
 * @Author: jjsnc
 * @Date:   2019-11-14 22:35:14
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-14 22:45:36
+* @Last Modified time: 2019-11-15 17:50:20
 */
 import * as constants from './constants';
 
+import axios from 'axios';
+import { fromJS } from 'immutable';
 export const searchFocus = () => ({
 	type: constants.SEARCH_FOCUS
 });
@@ -13,6 +15,7 @@ export const searchFocus = () => ({
 export const searchBlur = () => ({
 	type: constants.SEARCH_BLUR
 });
+
 
 export const mouseEnter = () => ({
 	type: constants.MOUSE_ENTER
@@ -27,3 +30,22 @@ export const changePage = (page) => ({
 	page
 });
 
+const chiangeList = (data)=> ({
+	type: constants.CHANGE_LIST,
+	data:fromJS(data)
+})
+
+
+
+
+export const getList = ()=> {
+	return (dispatch)=> {
+	axios.get('/api/headerList.json').then((res)=> {
+       const data  = res.data;
+       const action = chiangeList(data)
+       dispatch(action)
+	}).catch((e)=>{
+		console.log(e)
+	})
+	}
+}

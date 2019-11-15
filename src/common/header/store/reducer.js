@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-14 22:34:52
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 09:19:39
+* @Last Modified time: 2019-11-15 18:00:55
 */
 
 import * as constants from './constants';
@@ -31,10 +31,7 @@ export default (state = defaultState, action) => {
 		case constants.SEARCH_BLUR:
 	     return state.set('focused', false);
 		case constants.CHANGE_LIST:
-			return state.merge({
-				list: action.data,
-				totalPage: action.totalPage
-			});
+			return state.set('list',action.data)
 		case constants.MOUSE_ENTER:
 			return state.set('mouseIn', true);
 		case constants.MOUSE_LEAVE:
