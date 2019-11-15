@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 08:59:49
+* @Last Modified time: 2019-11-15 09:12:35
 */
 
 import React, { Component } from 'react';
@@ -53,7 +53,7 @@ class Header extends Component {
 
 const mapStateToProps = (state /*, ownProps*/) => {
   return {
-    focused: state.header.focused
+    focused: state.header.get('focused')
   }
 }
 
