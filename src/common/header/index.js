@@ -2,13 +2,13 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 00:23:40
+* @Last Modified time: 2019-11-15 08:59:49
 */
 
 import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
 import { SearchWrapper, HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button } from './style.js'
-import {searchFocus, searchBlur} from './store/actionCreators';
+import { actionCreators } from './store';
 import { connect } from 'react-redux';
 class Header extends Component {
 	render() {
@@ -60,11 +60,11 @@ const mapStateToProps = (state /*, ownProps*/) => {
 const mapDispatchToProps = (dispatch)=> {
     return {
 		handleInputFocus() {
-			const action = searchFocus();
+			const action = actionCreators.searchFocus();
 	    	dispatch(action)
 		},
 		handleInputBlur(){
-			const action = searchBlur()
+			const action = actionCreators.searchBlur()
 			dispatch(action);
 	 	}
     }
