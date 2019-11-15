@@ -2,14 +2,52 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 09:29:04
+* @Last Modified time: 2019-11-15 10:46:56
 */
 
 import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
-import { SearchWrapper, HeaderWrapper, Logo, Nav, NavItem, NavSearch, Addition, Button } from './style.js'
+import { SearchWrapper,
+  HeaderWrapper,
+   Logo,
+   Nav,
+   NavItem, 
+   NavSearch, 
+   Addition, 
+   Button,
+   SearchInfo,
+   SearchInfoTitle,
+   SearchInfoSwitch,
+   SearchInfoItem ,
+   SearchInfoList
+} from './style.js'
 import { actionCreators } from './store';
 import { connect } from 'react-redux';
+
+const getListArea  = (show)=> {
+	if (show) {
+		return (
+			<SearchInfo>
+				<SearchInfoTitle>
+					热门搜索
+					<SearchInfoSwitch>换一批</SearchInfoSwitch>
+					</SearchInfoTitle>
+					<SearchInfoList>
+						<SearchInfoItem> 教育</SearchInfoItem>
+						<SearchInfoItem> 教育</SearchInfoItem>
+						<SearchInfoItem> 教育</SearchInfoItem>
+						<SearchInfoItem> 教育</SearchInfoItem>
+						<SearchInfoItem> 教育</SearchInfoItem>
+						<SearchInfoItem> 教育</SearchInfoItem>
+						<SearchInfoItem> 教育</SearchInfoItem>
+						<SearchInfoItem> 教育</SearchInfoItem>
+					</SearchInfoList>
+				</SearchInfo>)
+	}else {
+		return null
+	}
+}
+
 class Header extends Component {
 	render() {
 		const {focused, handleInputFocus, handleInputBlur} = this.props
@@ -36,6 +74,8 @@ class Header extends Component {
 						></NavSearch>
 						</CSSTransition>
 						<span  className={focused? 'focused iconfont':'iconfont'}>&#xe62a;</span>
+
+						{getListArea(focused)}
 					</SearchWrapper>
 				</Nav>
 				<Addition>
