@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 18:02:14
+* @Last Modified time: 2019-11-16 10:25:53
 */
 
 import React, { Component } from 'react';
@@ -24,8 +24,12 @@ import { SearchWrapper,
 import { actionCreators } from './store';
 import { connect } from 'react-redux';
 
-const getListArea  = (show,list)=> {
-	if (show) {
+
+
+class Header extends Component {
+	getListArea(){
+		const {focused, list} = this.props
+	if (focused) {
 		return (
 			<SearchInfo>
 				<SearchInfoTitle>
@@ -41,11 +45,9 @@ const getListArea  = (show,list)=> {
 	}else {
 		return null
 	}
-}
-
-class Header extends Component {
+   }
 	render() {
-		const {focused, handleInputFocus, handleInputBlur,list} = this.props
+		const {focused, handleInputFocus, handleInputBlur} = this.props
 		return (
 			<HeaderWrapper>
 				<Logo href="./" />
@@ -70,7 +72,7 @@ class Header extends Component {
 						</CSSTransition>
 						<span  className={focused? 'focused iconfont':'iconfont'}>&#xe62a;</span>
 
-						{getListArea(focused,list)}
+						{this.getListArea()}
 					</SearchWrapper>
 				</Nav>
 				<Addition>

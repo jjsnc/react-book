@@ -2,12 +2,22 @@
 * @Author: jjsnc
 * @Date:   2019-11-14 22:35:14
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 17:50:20
+* @Last Modified time: 2019-11-16 10:21:43
 */
 import * as constants from './constants';
 
 import axios from 'axios';
 import { fromJS } from 'immutable';
+
+const chiangeList = (data)=> ({
+	type: constants.CHANGE_LIST,
+	data:fromJS(data)
+})
+
+
+
+
+
 export const searchFocus = () => ({
 	type: constants.SEARCH_FOCUS
 });
@@ -30,10 +40,6 @@ export const changePage = (page) => ({
 	page
 });
 
-const chiangeList = (data)=> ({
-	type: constants.CHANGE_LIST,
-	data:fromJS(data)
-})
 
 
 
