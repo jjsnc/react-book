@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-14 22:35:14
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 10:31:00
+* @Last Modified time: 2019-11-16 18:07:16
 */
 import * as constants from './constants';
 
@@ -48,7 +48,7 @@ export const changePage = (page) => ({
 export const getList = ()=> {
 	return (dispatch)=> {
 	axios.get('/api/headerList.json').then((res)=> {
-       const data  = res.data;
+       const data  = res.data.data;
        const action = chiangeList(data)
        dispatch(action)
 	}).catch((e)=>{
