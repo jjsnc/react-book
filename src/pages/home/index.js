@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-16 15:29:37
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 17:09:04
+* @Last Modified time: 2019-11-17 00:28:47
 */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import Topic from './components/Topic';
 import List from './components/List';
 import Recommend from './components/Recommend';
 import Writer from './components/Writer';
-
+import { actionCreators } from './store';
 
 import { 
 	HomeWrapper,
@@ -20,8 +20,6 @@ import {
 
 
 class Home extends PureComponent {
-
-
 	render() {
 		return (
 			<HomeWrapper>
@@ -37,9 +35,18 @@ class Home extends PureComponent {
 			</HomeWrapper>
 		)
 	}
+   componentDidMount() {
+		this.props.changeHomeData();
+	}
 
 }
 
 
 
-export default connect(null, null)(Home);
+const mapDispatch = (dispatch) => ({
+	changeHomeData() {
+		dispatch(actionCreators.getHomeInfo());
+	}
+});
+
+export default connect(null, mapDispatch)(Home);
