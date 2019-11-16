@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:24:43
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-15 10:44:51
+* @Last Modified time: 2019-11-16 14:20:49
 */
 
 import styled  from 'styled-components'
@@ -54,7 +54,7 @@ export const HeaderWrapper = styled.div`
 export const SearchWrapper = styled.div`
 float:left;
 position:relative;
-.iconfont {
+.zoom {
   position:absolute;
   right:5px;
   bottom: 5px;
@@ -91,6 +91,13 @@ export const SearchInfoTitle = styled.div`
 export const  SearchInfoSwitch = styled.span`
    float: right;
    font-size:13px;
+   .spin  {
+     display:inline-block;
+     font-size:12px;
+     margin-right:10px;
+     transition:all .2s ease-in;
+     transform: rotate(0);
+     transform-origin: center center;
 `;
 
 export const SearchInfoList = styled.div`

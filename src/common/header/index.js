@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 13:44:48
+* @Last Modified time: 2019-11-16 15:18:21
 */
 
 import React, { Component } from 'react';
@@ -33,7 +33,7 @@ class Header extends Component {
 		const pageList = []
       if (jsList.length) {
       	  for(let i = (page-1)* 10; i< page * 10; i++){
-            pageList.push(<SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>)
+           jsList[i] &&  pageList.push(<SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>)
         }
       }
 	if (focused || mouseIn) {
@@ -44,7 +44,10 @@ class Header extends Component {
 			>
 				<SearchInfoTitle>
 					热门搜索
-					<SearchInfoSwitch onClick={()=>handleChangePgae(page,totalPage) }>换一批</SearchInfoSwitch>
+					<SearchInfoSwitch onClick={()=>handleChangePgae(page,totalPage, this.spinIcon) }>
+					<span ref={(spin)=>{this.spinIcon = spin }} className="iconfont spin">&#xe858;</span>
+					换一批
+					</SearchInfoSwitch>
 					</SearchInfoTitle>
 					<SearchInfoList>
                     {pageList}
@@ -55,7 +58,7 @@ class Header extends Component {
 	}
    }
 	render() {
-		const {focused, handleInputFocus, handleInputBlur} = this.props
+		const {focused, handleInputFocus, handleInputBlur, list} = this.props
 		return (
 			<HeaderWrapper>
 				<Logo href="./" />
@@ -74,11 +77,11 @@ class Header extends Component {
 						>
 						<NavSearch
 						className={focused? 'focused':''}
-						onFocus={handleInputFocus}
+						onFocus={()=>handleInputFocus(list)}
 						onBlur={handleInputBlur}
 						></NavSearch>
 						</CSSTransition>
-						<span  className={focused? 'focused iconfont':'iconfont'}>&#xe62a;</span>
+						<span  className={focused? 'focused iconfont zoom':'iconfont zoom'}>&#xe62a;</span>
 						{this.getListArea()}
 					</SearchWrapper>
 				</Nav>
@@ -108,10 +111,12 @@ const mapStateToProps = (state /*, ownProps*/) => {
 
 const mapDispatchToProps = (dispatch)=> {
     return {
-		handleInputFocus() {
-		const action = actionCreators.searchFocus();
-	    dispatch(action)
-	    dispatch(actionCreators.getList())
+		handleInputFocus(list) {
+			console.log(list.size)
+			if (list.size===0) {
+			   dispatch(actionCreators.getList())
+			}
+            dispatch(actionCreators.searchFocus())
 		},
 		handleInputBlur(){
 			const action = actionCreators.searchBlur()
@@ -125,7 +130,14 @@ const mapDispatchToProps = (dispatch)=> {
 	 		const action = actionCreators.mouseLeave()
 	 		dispatch(action);
 	 	},
-	 	handleChangePgae(page, totalPage){
+	 	handleChangePgae(page, totalPage,spin){
+			let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
+			if (originAngle) {
+				originAngle = parseInt(originAngle, 10);
+			}else {
+				originAngle = 0;
+			}
+			spin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)';
 	 		if (page<totalPage) {
 	 			page++
 	 		}else{
