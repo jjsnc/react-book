@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 11:26:11
+* @Last Modified time: 2019-11-16 13:44:48
 */
 
 import React, { Component } from 'react';
@@ -33,7 +33,6 @@ class Header extends Component {
 		const pageList = []
       if (jsList.length) {
       	  for(let i = (page-1)* 10; i< page * 10; i++){
-       	   console.log(jsList[i],'jsList[i]')
             pageList.push(<SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>)
         }
       }
