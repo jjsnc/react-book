@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-16 15:29:37
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-17 00:28:47
+* @Last Modified time: 2019-11-17 07:13:59
 */
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
@@ -40,7 +40,6 @@ class Home extends PureComponent {
 	}
 
 }
-
 
 
 const mapDispatch = (dispatch) => ({
