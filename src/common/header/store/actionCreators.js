@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-14 22:35:14
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 10:21:43
+* @Last Modified time: 2019-11-16 10:31:00
 */
 import * as constants from './constants';
 
@@ -11,7 +11,8 @@ import { fromJS } from 'immutable';
 
 const chiangeList = (data)=> ({
 	type: constants.CHANGE_LIST,
-	data:fromJS(data)
+	data:fromJS(data),
+	totalPage: Math.ceil(data.length / 10)
 })
 
 

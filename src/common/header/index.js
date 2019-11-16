@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 10:25:53
+* @Last Modified time: 2019-11-16 11:26:11
 */
 
 import React, { Component } from 'react';
@@ -28,18 +28,27 @@ import { connect } from 'react-redux';
 
 class Header extends Component {
 	getListArea(){
-		const {focused, list} = this.props
-	if (focused) {
+		const {totalPage, focused, list, page,handleMouseEnter,handleMouseLeave, mouseIn,handleChangePgae} = this.props
+		const jsList= list.toJS()
+		const pageList = []
+      if (jsList.length) {
+      	  for(let i = (page-1)* 10; i< page * 10; i++){
+       	   console.log(jsList[i],'jsList[i]')
+            pageList.push(<SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>)
+        }
+      }
+	if (focused || mouseIn) {
 		return (
-			<SearchInfo>
+			<SearchInfo 
+			onMouseEnter={handleMouseEnter}
+			onMouseLeave={handleMouseLeave}
+			>
 				<SearchInfoTitle>
 					热门搜索
-					<SearchInfoSwitch>换一批</SearchInfoSwitch>
+					<SearchInfoSwitch onClick={()=>handleChangePgae(page,totalPage) }>换一批</SearchInfoSwitch>
 					</SearchInfoTitle>
 					<SearchInfoList>
-                    { list.map((item)=> {
-                    	return (<SearchInfoItem key={item}>{item}</SearchInfoItem>)
-                    })}
+                    {pageList}
 					</SearchInfoList>
 				</SearchInfo>)
 	}else {
@@ -71,7 +80,6 @@ class Header extends Component {
 						></NavSearch>
 						</CSSTransition>
 						<span  className={focused? 'focused iconfont':'iconfont'}>&#xe62a;</span>
-
 						{this.getListArea()}
 					</SearchWrapper>
 				</Nav>
@@ -92,7 +100,10 @@ const mapStateToProps = (state /*, ownProps*/) => {
   return {
     // focused: state.get('header').get('focused')
     focused: state.getIn(['header','focused']),
-    list: state.getIn(['header','list'])
+    list: state.getIn(['header','list']),
+    page: state.getIn(['header','page']),
+    mouseIn:state.getIn(['header','mouseIn']),
+    totalPage: state.getIn(['header','totalPage']),
   }
 }
 
@@ -106,6 +117,23 @@ const mapDispatchToProps = (dispatch)=> {
 		handleInputBlur(){
 			const action = actionCreators.searchBlur()
 			dispatch(action);
+	 	},
+	 	handleMouseEnter(){
+	 		const action = actionCreators.mouseEnter()
+	 		dispatch(action);
+	 	},
+	 	handleMouseLeave(){
+	 		const action = actionCreators.mouseLeave()
+	 		dispatch(action);
+	 	},
+	 	handleChangePgae(page, totalPage){
+	 		if (page<totalPage) {
+	 			page++
+	 		}else{
+	 			page =1
+	 		}
+	 		const action = actionCreators.changePage(page)
+	 		dispatch(action);
 	 	}
     }
 }
