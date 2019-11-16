@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 15:18:21
+* @Last Modified time: 2019-11-16 15:20:34
 */
 
 import React, { Component } from 'react';
@@ -112,7 +112,6 @@ const mapStateToProps = (state /*, ownProps*/) => {
 const mapDispatchToProps = (dispatch)=> {
     return {
 		handleInputFocus(list) {
-			console.log(list.size)
 			if (list.size===0) {
 			   dispatch(actionCreators.getList())
 			}
