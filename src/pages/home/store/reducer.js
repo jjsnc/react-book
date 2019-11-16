@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-16 17:03:49
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 17:48:11
+* @Last Modified time: 2019-11-16 17:58:30
 */
 import { fromJS } from 'immutable';
 import * as constants from './constants';
@@ -28,7 +28,15 @@ const defaultState = fromJS({
 	}	
 
 	],
-	recommendList: [],
+	recommendList: [{
+      id:1,
+      imgUrl:"//cdn2.jianshu.io/assets/web/banner-s-club-aa8bdf19f8cf729a759da42e4a96f366.png"
+	},
+    {
+      id:2,
+      imgUrl:"//cdn2.jianshu.io/assets/web/banner-s-club-aa8bdf19f8cf729a759da42e4a96f366.png"
+	}
+	],
 	articlePage: 1,
 	showScroll: false
 });
