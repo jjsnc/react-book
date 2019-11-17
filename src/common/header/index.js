@@ -2,69 +2,79 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-17 11:52:50
+* @Last Modified time: 2019-11-17 12:09:49
 */
 
 import React, { Component } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { SearchWrapper,
-  HeaderWrapper,
-   Logo,
-   Nav,
-   NavItem, 
-   NavSearch, 
-   Addition, 
-   Button,
-   SearchInfo,
-   SearchInfoTitle,
-   SearchInfoSwitch,
-   SearchInfoItem ,
-   SearchInfoList
-} from './style.js'
+import { CSSTransition } from 'react-transition-group';
 import { actionCreators } from './store';
 import { actionCreators as loginActionCreators } from '../../pages/login/store'
-import { connect } from 'react-redux';
-
-
+import {
+	HeaderWrapper,
+	Logo,
+	Nav,
+	NavItem,
+	SearchWrapper,
+	NavSearch,
+	SearchInfo,
+	SearchInfoTitle,
+	SearchInfoSwitch,
+	SearchInfoList,
+	SearchInfoItem,
+	Addition,
+	Button
+} from './style';
 
 class Header extends Component {
-	getListArea(){
-		const {totalPage, focused, list, page,handleMouseEnter,handleMouseLeave, mouseIn,handleChangePgae} = this.props
-		const jsList= list.toJS()
-		const pageList = []
-      if (jsList.length) {
-      	  for(let i = (page-1)* 10; i< page * 10; i++){
-           jsList[i] &&  pageList.push(<SearchInfoItem key={jsList[i]}>{jsList[i]}</SearchInfoItem>)
-        }
-      }
-	if (focused || mouseIn) {
-		return (
-			<SearchInfo 
-			onMouseEnter={handleMouseEnter}
-			onMouseLeave={handleMouseLeave}
-			>
-				<SearchInfoTitle>
-					热门搜索
-					<SearchInfoSwitch onClick={()=>handleChangePgae(page,totalPage, this.spinIcon) }>
-					<span ref={(spin)=>{this.spinIcon = spin }} className="iconfont spin">&#xe858;</span>
-					换一批
-					</SearchInfoSwitch>
+
+	getListArea() {
+		const { focused, list, page, totalPage, mouseIn, handleMouseEnter, handleMouseLeave, handleChangePage } = this.props;
+		const newList = list.toJS();
+		const pageList = [];
+
+		if (newList.length) {
+			for (let i = (page - 1) * 10; i < page * 10; i++) {
+				pageList.push(
+					<SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+				)
+			}
+		}
+
+		if (focused || mouseIn) {
+			return (
+				<SearchInfo 
+					onMouseEnter={handleMouseEnter}
+					onMouseLeave={handleMouseLeave}
+				>
+					<SearchInfoTitle>
+						热门搜索
+						<SearchInfoSwitch 
+							onClick={() => handleChangePage(page, totalPage, this.spinIcon)}
+						>
+							<i ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</i>
+							换一批
+						</SearchInfoSwitch>
 					</SearchInfoTitle>
 					<SearchInfoList>
-                    {pageList}
+						{pageList}
 					</SearchInfoList>
-				</SearchInfo>)
-	}else {
-		return null
+				</SearchInfo>
+			)
+		}else {
+			return null;
+		}
 	}
-   }
+
 	render() {
-		const {focused, handleInputFocus, handleInputBlur, list, login, logout} = this.props
+		const { focused, handleInputFocus, handleInputBlur, list, login, logout } = this.props;
 		return (
 			<HeaderWrapper>
-				<Logo href="./" />
-				<Nav >
+				<Link to='/'>
+					<Logo/>
+				</Link>
+				<Nav>
 					<NavItem className='left active'>首页</NavItem>
 					<NavItem className='left'>下载App</NavItem>
 					{
@@ -73,70 +83,67 @@ class Header extends Component {
 							<Link to='/login'><NavItem className='right'>登陆</NavItem></Link>
 					}
 					<NavItem className='right'>
-						<span className="iconfont">&#xe636;</span>
+						<i className="iconfont">&#xe636;</i>
 					</NavItem>
 					<SearchWrapper>
-					<CSSTransition
+						<CSSTransition
 							in={focused}
 							timeout={200}
 							classNames="slide"
 						>
-						<NavSearch
-						className={focused? 'focused':''}
-						onFocus={()=>handleInputFocus(list)}
-						onBlur={handleInputBlur}
-						></NavSearch>
+							<NavSearch
+								className={focused ? 'focused': ''}
+								onFocus={() => handleInputFocus(list)}
+								onBlur={handleInputBlur}
+							></NavSearch>
 						</CSSTransition>
-						<span  className={focused? 'focused iconfont zoom':'iconfont zoom'}>&#xe62a;</span>
+						<i className={focused ? 'focused iconfont zoom': 'iconfont zoom'}>
+							&#xe614;
+						</i>
 						{this.getListArea()}
 					</SearchWrapper>
 				</Nav>
 				<Addition>
-					<Button className='writting'>
-						<span className="iconfont">&#xe604;</span>
-						写文章
-				 </Button>
+					<Link to='/write'>
+						<Button className='writting'>
+							<i className="iconfont">&#xe615;</i>
+							写文章
+						</Button>
+					</Link>
 					<Button className='reg'>注册</Button>
 				</Addition>
-
 			</HeaderWrapper>
-		)
+		);
 	}
 }
 
-const mapStateToProps = (state /*, ownProps*/) => {
-  return {
-    // focused: state.get('header').get('focused')
-    focused: state.getIn(['header','focused']),
-    list: state.getIn(['header','list']),
-    page: state.getIn(['header','page']),
-    mouseIn:state.getIn(['header','mouseIn']),
-    totalPage: state.getIn(['header','totalPage']),
-    login: state.getIn(['login', 'login'])
-  }
+const mapStateToProps = (state) => {
+	return {
+		focused: state.getIn(['header', 'focused']),
+		list: state.getIn(['header', 'list']),
+		page: state.getIn(['header', 'page']),
+		totalPage: state.getIn(['header', 'totalPage']),
+		mouseIn: state.getIn(['header', 'mouseIn']),
+		login: state.getIn(['login', 'login'])
+	}
 }
 
-const mapDispatchToProps = (dispatch)=> {
-    return {
+const mapDispathToProps = (dispatch) => {
+	return {
 		handleInputFocus(list) {
-			if (list.size===0) {
-			   dispatch(actionCreators.getList())
-			}
-            dispatch(actionCreators.searchFocus())
+			(list.size === 0) && dispatch(actionCreators.getList());
+			dispatch(actionCreators.searchFocus());
 		},
-		handleInputBlur(){
-			const action = actionCreators.searchBlur()
-			dispatch(action);
-	 	},
-	 	handleMouseEnter(){
-	 		const action = actionCreators.mouseEnter()
-	 		dispatch(action);
-	 	},
-	 	handleMouseLeave(){
-	 		const action = actionCreators.mouseLeave()
-	 		dispatch(action);
-	 	},
-	 	handleChangePgae(page, totalPage,spin){
+		handleInputBlur() {
+			dispatch(actionCreators.searchBlur());
+		},
+		handleMouseEnter() {
+			dispatch(actionCreators.mouseEnter());
+		},
+		handleMouseLeave() {
+			dispatch(actionCreators.mouseLeave());
+		},
+		handleChangePage(page, totalPage, spin) {
 			let originAngle = spin.style.transform.replace(/[^0-9]/ig, '');
 			if (originAngle) {
 				originAngle = parseInt(originAngle, 10);
@@ -144,22 +151,17 @@ const mapDispatchToProps = (dispatch)=> {
 				originAngle = 0;
 			}
 			spin.style.transform = 'rotate(' + (originAngle + 360) + 'deg)';
-	 		if (page<totalPage) {
-	 			page++
-	 		}else{
-	 			page =1
-	 		}
-	 		const action = actionCreators.changePage(page)
-	 		dispatch(action);
-	 	},
+
+			if (page < totalPage) {
+				dispatch(actionCreators.changePage(page + 1));
+			}else {
+				dispatch(actionCreators.changePage(1));
+			}
+		},
 		logout() {
 			dispatch(loginActionCreators.logout())
-		}	 	
-    }
+		}
+	}
 }
 
-
-
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispathToProps)(Header);
