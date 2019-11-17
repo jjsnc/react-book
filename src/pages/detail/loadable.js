@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-16 15:30:33
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 15:43:01
+* @Last Modified time: 2019-11-17 10:45:57
 */
 /*
 * @Author: jjsnc
@@ -10,21 +10,16 @@
 * @Last Modified by:   jjsnc
 * @Last Modified time: 2019-11-16 15:41:14
 */
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
+import Loadable from 'react-loadable'
 
-class Detail extends PureComponent {
-
-
-	render() {
-		return (
-		  <div>Detail</div>
-		)
+const LoadableComponent = Loadable({
+	loader:()=>import('./'),
+	loading(){
+		return <div>正在加载</div>
 	}
-
-}
-
+})
 
 
-export default connect(null, null)(Detail);
+export default ()=> <LoadableComponent />
