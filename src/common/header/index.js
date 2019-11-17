@@ -2,11 +2,12 @@
 * @Author: jjsnc
 * @Date:   2019-11-13 17:07:44
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-16 15:20:34
+* @Last Modified time: 2019-11-17 11:52:50
 */
 
 import React, { Component } from 'react';
 import { CSSTransition } from 'react-transition-group';
+import { Link } from 'react-router-dom';
 import { SearchWrapper,
   HeaderWrapper,
    Logo,
@@ -22,6 +23,7 @@ import { SearchWrapper,
    SearchInfoList
 } from './style.js'
 import { actionCreators } from './store';
+import { actionCreators as loginActionCreators } from '../../pages/login/store'
 import { connect } from 'react-redux';
 
 
@@ -58,14 +60,18 @@ class Header extends Component {
 	}
    }
 	render() {
-		const {focused, handleInputFocus, handleInputBlur, list} = this.props
+		const {focused, handleInputFocus, handleInputBlur, list, login, logout} = this.props
 		return (
 			<HeaderWrapper>
 				<Logo href="./" />
 				<Nav >
 					<NavItem className='left active'>首页</NavItem>
 					<NavItem className='left'>下载App</NavItem>
-					<NavItem className='right'>登录</NavItem>
+					{
+						login ? 
+							<NavItem onClick={logout} className='right'>退出</NavItem> : 
+							<Link to='/login'><NavItem className='right'>登陆</NavItem></Link>
+					}
 					<NavItem className='right'>
 						<span className="iconfont">&#xe636;</span>
 					</NavItem>
@@ -106,6 +112,7 @@ const mapStateToProps = (state /*, ownProps*/) => {
     page: state.getIn(['header','page']),
     mouseIn:state.getIn(['header','mouseIn']),
     totalPage: state.getIn(['header','totalPage']),
+    login: state.getIn(['login', 'login'])
   }
 }
 
@@ -144,7 +151,10 @@ const mapDispatchToProps = (dispatch)=> {
 	 		}
 	 		const action = actionCreators.changePage(page)
 	 		dispatch(action);
-	 	}
+	 	},
+		logout() {
+			dispatch(loginActionCreators.logout())
+		}	 	
     }
 }
 

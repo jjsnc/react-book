@@ -2,7 +2,7 @@
 * @Author: jjsnc
 * @Date:   2019-11-16 15:29:23
 * @Last Modified by:   jjsnc
-* @Last Modified time: 2019-11-17 11:42:17
+* @Last Modified time: 2019-11-17 11:47:46
 */
 
 import React, { PureComponent } from 'react';
@@ -18,8 +18,8 @@ class Login extends PureComponent {
 			return (
 				<LoginWrapper>
 					<LoginBox>
-						<Input placeholder='账号' res={(input) => {this.account = input}}/>
-						<Input placeholder='密码' type='password' res={(input) => {this.password = input}}/>
+						<Input placeholder='账号' ref={(input) => {this.account = input}}/>
+						<Input placeholder='密码' type='password' ref={(input) => {this.password = input}}/>
 						<Button onClick={() => this.props.login(this.account, this.password)}>登陆</Button>
 					</LoginBox>
 				</LoginWrapper>
